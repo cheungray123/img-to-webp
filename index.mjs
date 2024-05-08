@@ -9,14 +9,14 @@ const rl = readline.createInterface({
 });
 
 // 将单个文件转换为 WebP 格式
-async function convertFile(inputPath, quality, removeSource) {
-	const outputName = `${basename(inputPath, extname(inputPath))}.webp`;
-	const outputPath = resolve(dirname(inputPath), outputName);
-
+async function convertFile(inputPath, quality, removeSource, outputPath) {
 	const startTime = Date.now(); // 记录开始时间
 
 	try {
-		await sharp(inputPath).toFormat('webp', { quality }).toFile(outputPath);
+		await sharp(inputPath)
+			.toFormat('webp', { quality })
+			.toFile(outputPath); // 保存到指定输出路径
+
 		console.log(`已成功将 ${inputPath} 转换为 WebP 格式，并保存至 ${outputPath}`);
 
 		const endTime = Date.now(); // 记录结束时间
@@ -31,7 +31,6 @@ async function convertFile(inputPath, quality, removeSource) {
 		console.error(`转换 ${inputPath} 失败：`, err);
 	}
 }
-
 // 将文件夹中的所有文件转换为 WebP 格式
 async function convertFolder(sourcePath, targetFolder, quality, removeSource) {
 	if (!fs.existsSync(targetFolder)) {
@@ -46,7 +45,9 @@ async function convertFolder(sourcePath, targetFolder, quality, removeSource) {
 
 		for (const file of imageFiles) {
 			const inputPath = resolve(sourcePath, file);
-			await convertFile(inputPath, quality, removeSource);
+			const outputName = `${basename(file, extname(file))}.webp`;
+			const outputPath = resolve(targetFolder, outputName); // 输出路径为目标文件夹下
+			await convertFile(inputPath, quality, removeSource, outputPath); // 传递输出路径
 		}
 
 		const endTime = Date.now(); // 记录结束时间
@@ -56,6 +57,7 @@ async function convertFolder(sourcePath, targetFolder, quality, removeSource) {
 		console.error('无法读取源文件夹：', err);
 	}
 }
+
 
 // 提示用户输入文件路径或文件夹路径
 function promptUser() {
