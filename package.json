@@ -1,0 +1,29 @@
+{
+	"name": "img-to-webp",
+	"version": "1.0.0",
+	"description": "一个用于将 PNG 和 JPEG 图像转换为 WebP 格式的 npm 包。它使用了 sharp 库来进行图像处理。",
+	"type": "module",
+	"main": "index.js",
+	"scripts": {
+		"webp": "node index.mjs"
+	},
+	"keywords": [
+		"图片",
+		"webp",
+		"png",
+		"jpeg"
+	],
+	"author": "cheung",
+	"license": "MIT",
+	"dependencies": {
+		"sharp": "^0.33.3"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cheungray123/img-to-webp.git"
+	},
+	"bugs": {
+		"url": "https://github.com/cheungray123/img-to-webp/issues"
+	},
+	"homepage": "https://github.com/cheungray123/img-to-webp"
+}
